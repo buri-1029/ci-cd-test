@@ -51,4 +51,4 @@ jobs:
         aws s3 cp \
         --region ap-northeast-2 \
         --acl private \
-        ./springboot-intro-build.zip s3://springboot-intro-build/
+        ./springboot-base.zip s3://springboot-base/
