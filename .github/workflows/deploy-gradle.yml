@@ -13,8 +13,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    env:
-      working-directory : ./spring-boot-base
     
     steps:
     - uses: actions/checkout@v2
@@ -27,12 +25,10 @@ jobs:
         
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      working-directory : ${{ env.working-directory }}
       
     # Build  
     - name: Build with Gradle
       run: ./gradlew build
-      working-directory : ${{ env.working-directory }}
     
     # 전송할 파일을 담을 디렉토리 생성
     - name: Make Directory for deliver
