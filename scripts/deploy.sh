@@ -1,10 +1,14 @@
 #!/bin/bash
 
+REPOSITORY=/home/ec2-user/app
+PROJECT_NAME=springboot-base
+
 BUILD_JAR=$(ls /home/ec2-user/app/build/libs/*.jar)
-JAR_NAME=$(basename $BUILD_JAR)
+
 echo "> build 파일명: $JAR_NAME" >> /home/ec2-user/app/deploy.log
 
 echo "> build 파일 복사" >> /home/ec2-user/app/deploy.log
+
 DEPLOY_PATH=/home/ec2-user/app/
 cp $BUILD_JAR $DEPLOY_PATH
 
@@ -20,6 +24,15 @@ else
   sleep 5
 fi
 
-DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
-echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/app/deploy.log
-nohup java -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/app/deploy_err.log &
+echo "> 새 애플리케이션 배포"
+
+JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
+
+echo "> JAR Name: $JAR_NAME"
+
+echo "> $JAR_NAME 에 실행권한 추가"
+
+chmod +x $JAR_NAME
+
+echo "> $JAR_NAME 실행" >> /home/ec2-user/app/deploy.log
+nohup java -jar $JAR_NAME >> /home/ec2-user/deploy.log 2>&1 /home/ec2-user/app/deploy_err.log &
