@@ -33,4 +33,4 @@ echo "> $JAR_NAME 에 실행권한 추가"
 chmod +x $JAR_NAME
 
 echo "> $JAR_NAME 실행" >> /home/ec2-user/app/deploy.log
-nohup java -jar $JAR_NAME > $REPOSITORY/nohup.out >> /home/ec2-user/deploy.log 2>&1 /home/ec2-user/app/deploy_err.log &
+nohup java -jar $JAR_NAME > $REPOSITORY/nohup.out 2>&1 /home/ec2-user/app/deploy_err.log &
