@@ -62,14 +62,14 @@ jobs:
           ./springboot-intro-build.zip s3://springboot-base/
 
       # Deploy
-#       - name: Deploy
-#         env:
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         run: |
-#           aws deploy create-deployment \
-#           --application-name springboot-base \
-#           --deployment-group-name springboot-base-group \
-#           --file-exists-behavior OVERWRITE \
-#           --s3-location bucket=springboot-base,bundleType=zip,key=springboot-intro-build.zip \
-#           --region ap-northeast-2
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws deploy create-deployment \
+          --application-name springboot-base \
+          --deployment-group-name springboot-base-group \
+          --file-exists-behavior OVERWRITE \
+          --s3-location bucket=springboot-base,bundleType=zip,key=springboot-intro-build.zip \
+          --region ap-northeast-2
