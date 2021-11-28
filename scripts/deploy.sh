@@ -5,15 +5,13 @@ PROJECT_NAME=springboot-base
 
 BUILD_JAR=$(ls /home/ec2-user/app/build/libs/*.jar)
 
-echo "> build 파일명: $JAR_NAME" >> /home/ec2-user/app/deploy.log
-
 echo "> build 파일 복사" >> /home/ec2-user/app/deploy.log
 
-DEPLOY_PATH=/home/ec2-user/app/
-cp $BUILD_JAR $DEPLOY_PATH
+cp $BUILD_JAR $REPOSITORY/
 
 echo "> 현재 실행중인 애플리케이션 pid 확인" >> /home/ec2-user/app/deploy.log
-CURRENT_PID=$(pgrep -f $JAR_NAME)
+
+CURRENT_PID=$(pgrep -fl cream | awk '{print $1}')
 
 if [ -z $CURRENT_PID ]
 then
@@ -35,4 +33,4 @@ echo "> $JAR_NAME 에 실행권한 추가"
 chmod +x $JAR_NAME
 
 echo "> $JAR_NAME 실행" >> /home/ec2-user/app/deploy.log
-nohup java -jar $JAR_NAME >> /home/ec2-user/deploy.log 2>&1 /home/ec2-user/app/deploy_err.log &
+nohup java -jar $JAR_NAME > $REPOSITORY/nohup.out >> /home/ec2-user/deploy.log 2>&1 /home/ec2-user/app/deploy_err.log &
